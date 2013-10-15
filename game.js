@@ -11,6 +11,13 @@ var width = 800,
 	dropStatus = new Array(false,false,false,false,false,false,false,false,false,false);
 	movingCount = 0;
 	
+	html5_audiotypes={ //define list of audio file extensions and their associated audio types. Add to it if your specified audio file isn't on this list:
+   "mp3": "audio/mpeg",
+   "mp4": "audio/mp4",
+   "ogg": "audio/ogg",
+   "wav": "audio/wav"
+	}
+	
 	toolIsFullScore= 0;
 	toolCapacity = 5;
 	
@@ -22,7 +29,8 @@ var width = 800,
 	movingSpeed = 10,
 	
 	
-
+    dropimage = new Image();
+    dropimage.src = "res/images/drop_s.png";
 	
 	padArray = new Array(4);
 	padArray[0] = new Image();
@@ -173,10 +181,10 @@ var cuterus = new (function(){
 
 var drop = new (function(){
 
-    this.image = new Image();
-    this.image.src = "res/images/drop_s.png";
+	this.image = dropimage;
+	this.image.src = dropimage.src;
 
-//TODO: clipping an size von tropfen anpassen
+
     this.width = 141;
     this.height = 137;
 
@@ -226,8 +234,8 @@ var drop = new (function(){
 	
     this.draw = function(count){
         try {
-			
-            ctx.drawImage(this.image, 0, 0, this.width, this.height, dropX[count], dropY[count], this.width, this.height);
+			ctx.drawImage(this.image, dropX[count], dropY[count]);
+            //ctx.drawImage(this.image, 0, 0, this.width, this.height, dropX[count], dropY[count], this.width, this.height);
 //cutting source image and pasting it into destination one, drawImage(Image Object, source X, source Y, source Width, source Height, destination X (X position), destination Y (Y position), Destination width, Destination height)
         } catch (e) {
 //sometimes, if character's image is too big and will not load until the drawing of the first frame, Javascript will throws error and stop executing everything. To avoid this we have to catch an error and retry painting in another frame. It is invisible for the user with 50 frames per second.
@@ -274,7 +282,9 @@ this.height = imageSizeY[(toolsCounter+1)%4];
   
  this.draw = function(){
         try {
-            ctx.drawImage(this.image, 0, 0, this.width, this.height, this.X, this.Y, this.width, this.height);
+			ctx.drawImage(this.image,this.X, this.Y);
+    
+            //ctx.drawImage(this.image, 0, 0, this.width, this.height, this.X, this.Y, this.width, this.height);
       //cutting source image and pasting it into destination one, drawImage(Image Object, source X, source Y, source Width, source Height, destination X (X position), destination Y (Y position), Destination width, Destination height)
         } catch (e) {
 
@@ -345,7 +355,9 @@ this.height = imageSizeY[toolsCounter];
   
  this.draw = function(){
         try {
-            ctx.drawImage(this.image, 0, 0, this.width, this.height, this.X, this.Y, this.width, this.height);
+		ctx.drawImage(this.image,this.X, this.Y);
+      
+            //ctx.drawImage(this.image, 0, 0, this.width, this.height, this.X, this.Y, this.width, this.height);
       //cutting source image and pasting it into destination one, drawImage(Image Object, source X, source Y, source Width, source Height, destination X (X position), destination Y (Y position), Destination width, Destination height)
         } catch (e) {
 
@@ -371,6 +383,8 @@ var checkCollision = function(count) {
 		}
 		else{
         points = points + 1;
+
+
         }
 		toolIsFullScore++;
 		
@@ -382,8 +396,6 @@ var checkCollision = function(count) {
       }
   }
   
-
-
 
 //SCORE
 var score = function() {
