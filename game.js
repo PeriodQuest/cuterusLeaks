@@ -22,7 +22,6 @@ var width = 800,
 	toolCapacity = 5;
 	
 	toolsCounter = 0;
-	nextToolsCounter = 1;
 
 	points = 0;
 	toolIsMoving = false,
@@ -185,8 +184,8 @@ var drop = new (function(){
 	this.image.src = dropimage.src;
 
 
-    this.width = 141;
-    this.height = 137;
+    this.width = 40;
+    this.height = 61;
 
     this.X = 0;
     this.Y = 0;
